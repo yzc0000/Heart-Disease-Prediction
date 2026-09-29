@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+.streamlit/secrets.toml
+
+# Auxiliary datasets were audited but are not used by the training or app.
+heart.csv
+dataset_
+
+# The tuned model below is the one used by the app; the baseline can be rebuilt.
+artifacts/baseline_model.joblib

@@ -1,0 +1,1286 @@
+{
+  "data_file": "heart_disease_uci.csv",
+  "cleaning": {
+    "raw_rows": 920,
+    "cleaned_rows": 918,
+    "exact_duplicate_rows_removed": 2,
+    "zero_cholesterol_as_missing": 172,
+    "zero_blood_pressure_as_missing": 1,
+    "missing_after_cleaning": {
+      "age": 0,
+      "trestbps": 60,
+      "chol": 201,
+      "thalch": 55,
+      "oldpeak": 62,
+      "sex": 0,
+      "cp": 0,
+      "fbs": 90,
+      "restecg": 2,
+      "exang": 55,
+      "slope": 307,
+      "ca": 609,
+      "thal": 484
+    },
+    "excluded_feature_missing_raw": {
+      "slope": 309,
+      "ca": 611,
+      "thal": 486
+    },
+    "excluded_feature_missing_after_dedup": {
+      "slope": 307,
+      "ca": 609,
+      "thal": 484
+    },
+    "positive_rows": 508,
+    "positive_label": "num > 0",
+    "non_predictor_columns": [
+      "id",
+      "dataset",
+      "num"
+    ]
+  },
+  "features": [
+    "age",
+    "trestbps",
+    "chol",
+    "thalch",
+    "oldpeak",
+    "sex",
+    "cp",
+    "fbs",
+    "restecg",
+    "exang",
+    "slope",
+    "ca",
+    "thal"
+  ],
+  "feature_set": "all_13",
+  "missing_strategy": "missing_indicator",
+  "training_feature_ranges": {
+    "age": {
+      "min": 29.0,
+      "max": 77.0
+    },
+    "trestbps": {
+      "min": 80.0,
+      "max": 200.0
+    },
+    "chol": {
+      "min": 100.0,
+      "max": 603.0
+    },
+    "thalch": {
+      "min": 60.0,
+      "max": 202.0
+    },
+    "oldpeak": {
+      "min": -2.0,
+      "max": 6.2
+    },
+    "ca": {
+      "min": 0.0,
+      "max": 3.0
+    }
+  },
+  "split": {
+    "train_rows": 734,
+    "test_rows": 184,
+    "train_positive": 406,
+    "test_positive": 102,
+    "test_fraction": 0.2,
+    "random_state": 42,
+    "stratified_by": "dataset and binary target"
+  },
+  "search": {
+    "candidate_count_per_model": 18,
+    "feature_sets": {
+      "core_10": [
+        "age",
+        "trestbps",
+        "chol",
+        "thalch",
+        "oldpeak",
+        "sex",
+        "cp",
+        "fbs",
+        "restecg",
+        "exang"
+      ],
+      "plus_slope_11": [
+        "age",
+        "trestbps",
+        "chol",
+        "thalch",
+        "oldpeak",
+        "sex",
+        "cp",
+        "fbs",
+        "restecg",
+        "exang",
+        "slope"
+      ],
+      "all_13": [
+        "age",
+        "trestbps",
+        "chol",
+        "thalch",
+        "oldpeak",
+        "sex",
+        "cp",
+        "fbs",
+        "restecg",
+        "exang",
+        "slope",
+        "ca",
+        "thal"
+      ]
+    },
+    "missing_strategies": [
+      "median_mode",
+      "missing_indicator"
+    ],
+    "parameter_settings": {
+      "Logistic regression": [
+        {
+          "C": 0.1
+        },
+        {
+          "C": 1.0
+        },
+        {
+          "C": 10.0
+        }
+      ],
+      "Random forest": [
+        {
+          "n_estimators": 300,
+          "min_samples_leaf": 3,
+          "max_depth": null
+        },
+        {
+          "n_estimators": 300,
+          "min_samples_leaf": 5,
+          "max_depth": 6
+        },
+        {
+          "n_estimators": 300,
+          "min_samples_leaf": 1,
+          "max_depth": 10
+        }
+      ],
+      "XGBoost": [
+        {
+          "n_estimators": 200,
+          "max_depth": 3,
+          "learning_rate": 0.05,
+          "min_child_weight": 1,
+          "reg_lambda": 5
+        },
+        {
+          "n_estimators": 300,
+          "max_depth": 2,
+          "learning_rate": 0.04,
+          "min_child_weight": 3,
+          "reg_lambda": 10
+        },
+        {
+          "n_estimators": 150,
+          "max_depth": 4,
+          "learning_rate": 0.05,
+          "min_child_weight": 2,
+          "reg_lambda": 5
+        }
+      ]
+    },
+    "outer_folds": 3,
+    "inner_folds": 3,
+    "final_search_folds": 5,
+    "scoring": "F2 at decision threshold 0.5"
+  },
+  "decision_threshold": 0.5,
+  "selection_rule": "Highest mean outer nested-CV F2; lower fold SD breaks ties",
+  "holdout_status": "Previously inspected during baseline development; descriptive comparison, not a fresh final test",
+  "selected_model": "Random forest",
+  "models": {
+    "Logistic regression": {
+      "config": {
+        "feature_set": "all_13",
+        "features": [
+          "age",
+          "trestbps",
+          "chol",
+          "thalch",
+          "oldpeak",
+          "sex",
+          "cp",
+          "fbs",
+          "restecg",
+          "exang",
+          "slope",
+          "ca",
+          "thal"
+        ],
+        "missing_strategy": "missing_indicator",
+        "model_params": {
+          "C": 0.1
+        }
+      },
+      "nested_cv": {
+        "f2": {
+          "mean": 0.8438625880741819,
+          "std": 0.042377134011685406
+        },
+        "folds": [
+          {
+            "n": 245,
+            "positive_cases": 136,
+            "true_negatives": 80,
+            "false_positives": 29,
+            "false_negatives": 26,
+            "true_positives": 110,
+            "precision": 0.7913669064748201,
+            "recall": 0.8088235294117647,
+            "specificity": 0.7339449541284404,
+            "f1": 0.8,
+            "f2": 0.8052708638360175,
+            "accuracy": 0.7755102040816326,
+            "roc_auc": 0.8630599028602266,
+            "average_precision": 0.8769104994486299,
+            "confusion_matrix": [
+              [
+                80,
+                29
+              ],
+              [
+                26,
+                110
+              ]
+            ]
+          },
+          {
+            "n": 245,
+            "positive_cases": 135,
+            "true_negatives": 86,
+            "false_positives": 24,
+            "false_negatives": 13,
+            "true_positives": 122,
+            "precision": 0.8356164383561644,
+            "recall": 0.9037037037037037,
+            "specificity": 0.7818181818181819,
+            "f1": 0.8683274021352313,
+            "f2": 0.8892128279883382,
+            "accuracy": 0.8489795918367347,
+            "roc_auc": 0.9183838383838384,
+            "average_precision": 0.9210660678875499,
+            "confusion_matrix": [
+              [
+                86,
+                24
+              ],
+              [
+                13,
+                122
+              ]
+            ]
+          },
+          {
+            "n": 244,
+            "positive_cases": 135,
+            "true_negatives": 97,
+            "false_positives": 12,
+            "false_negatives": 24,
+            "true_positives": 111,
+            "precision": 0.9024390243902439,
+            "recall": 0.8222222222222222,
+            "specificity": 0.8899082568807339,
+            "f1": 0.8604651162790697,
+            "f2": 0.8371040723981901,
+            "accuracy": 0.8524590163934426,
+            "roc_auc": 0.9222562011552836,
+            "average_precision": 0.9449650167788696,
+            "confusion_matrix": [
+              [
+                97,
+                12
+              ],
+              [
+                24,
+                111
+              ]
+            ]
+          }
+        ]
+      },
+      "cross_validation": {
+        "f2": {
+          "mean": 0.8438625880741819,
+          "std": 0.042377134011685406
+        }
+      },
+      "final_search_cv_f2": {
+        "mean": 0.8475152780394193,
+        "std": 0.03970374430433742
+      },
+      "holdout": {
+        "n": 184,
+        "positive_cases": 102,
+        "true_negatives": 65,
+        "false_positives": 17,
+        "false_negatives": 10,
+        "true_positives": 92,
+        "precision": 0.8440366972477065,
+        "recall": 0.9019607843137255,
+        "specificity": 0.7926829268292683,
+        "f1": 0.8720379146919431,
+        "f2": 0.8897485493230174,
+        "accuracy": 0.8532608695652174,
+        "roc_auc": 0.8949067431850789,
+        "average_precision": 0.8957049837084654,
+        "confusion_matrix": [
+          [
+            65,
+            17
+          ],
+          [
+            10,
+            92
+          ]
+        ]
+      },
+      "holdout_by_site": {
+        "Cleveland": {
+          "n": 61,
+          "positive_cases": 28,
+          "true_negatives": 28,
+          "false_positives": 5,
+          "false_negatives": 2,
+          "true_positives": 26,
+          "precision": 0.8387096774193549,
+          "recall": 0.9285714285714286,
+          "specificity": 0.8484848484848485,
+          "f1": 0.8813559322033898,
+          "f2": 0.9090909090909091,
+          "accuracy": 0.8852459016393442,
+          "roc_auc": 0.9632034632034632,
+          "average_precision": 0.9490845010447952,
+          "confusion_matrix": [
+            [
+              28,
+              5
+            ],
+            [
+              2,
+              26
+            ]
+          ]
+        },
+        "Hungary": {
+          "n": 58,
+          "positive_cases": 21,
+          "true_negatives": 33,
+          "false_positives": 4,
+          "false_negatives": 5,
+          "true_positives": 16,
+          "precision": 0.8,
+          "recall": 0.7619047619047619,
+          "specificity": 0.8918918918918919,
+          "f1": 0.7804878048780488,
+          "f2": 0.7692307692307693,
+          "accuracy": 0.8448275862068966,
+          "roc_auc": 0.8442728442728443,
+          "average_precision": 0.7750557447098134,
+          "confusion_matrix": [
+            [
+              33,
+              4
+            ],
+            [
+              5,
+              16
+            ]
+          ]
+        },
+        "Switzerland": {
+          "n": 25,
+          "positive_cases": 23,
+          "true_negatives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "true_positives": 22,
+          "precision": 0.9565217391304348,
+          "recall": 0.9565217391304348,
+          "specificity": 0.5,
+          "f1": 0.9565217391304348,
+          "f2": 0.9565217391304348,
+          "accuracy": 0.92,
+          "roc_auc": 0.6086956521739131,
+          "average_precision": 0.9423496444454997,
+          "confusion_matrix": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              22
+            ]
+          ]
+        },
+        "VA Long Beach": {
+          "n": 40,
+          "positive_cases": 30,
+          "true_negatives": 3,
+          "false_positives": 7,
+          "false_negatives": 2,
+          "true_positives": 28,
+          "precision": 0.8,
+          "recall": 0.9333333333333333,
+          "specificity": 0.3,
+          "f1": 0.8615384615384616,
+          "f2": 0.9032258064516129,
+          "accuracy": 0.775,
+          "roc_auc": 0.7166666666666667,
+          "average_precision": 0.865270855245551,
+          "confusion_matrix": [
+            [
+              3,
+              7
+            ],
+            [
+              2,
+              28
+            ]
+          ]
+        }
+      },
+      "unseen_site_validation": {
+        "Cleveland": {
+          "n": 243,
+          "positive_cases": 111,
+          "true_negatives": 113,
+          "false_positives": 19,
+          "false_negatives": 22,
+          "true_positives": 89,
+          "precision": 0.8240740740740741,
+          "recall": 0.8018018018018018,
+          "specificity": 0.8560606060606061,
+          "f1": 0.8127853881278538,
+          "f2": 0.8061594202898551,
+          "accuracy": 0.831275720164609,
+          "roc_auc": 0.8914823914823914,
+          "average_precision": 0.8854833621126919,
+          "confusion_matrix": [
+            [
+              113,
+              19
+            ],
+            [
+              22,
+              89
+            ]
+          ]
+        },
+        "Hungary": {
+          "n": 234,
+          "positive_cases": 85,
+          "true_negatives": 109,
+          "false_positives": 40,
+          "false_negatives": 10,
+          "true_positives": 75,
+          "precision": 0.6521739130434783,
+          "recall": 0.8823529411764706,
+          "specificity": 0.7315436241610739,
+          "f1": 0.75,
+          "f2": 0.8241758241758241,
+          "accuracy": 0.7863247863247863,
+          "roc_auc": 0.9130675088827478,
+          "average_precision": 0.8879821419595249,
+          "confusion_matrix": [
+            [
+              109,
+              40
+            ],
+            [
+              10,
+              75
+            ]
+          ]
+        },
+        "Switzerland": {
+          "n": 98,
+          "positive_cases": 92,
+          "true_negatives": 3,
+          "false_positives": 3,
+          "false_negatives": 18,
+          "true_positives": 74,
+          "precision": 0.961038961038961,
+          "recall": 0.8043478260869565,
+          "specificity": 0.5,
+          "f1": 0.8757396449704142,
+          "f2": 0.8314606741573034,
+          "accuracy": 0.7857142857142857,
+          "roc_auc": 0.7735507246376812,
+          "average_precision": 0.9807352038597464,
+          "confusion_matrix": [
+            [
+              3,
+              3
+            ],
+            [
+              18,
+              74
+            ]
+          ]
+        },
+        "VA Long Beach": {
+          "n": 159,
+          "positive_cases": 118,
+          "true_negatives": 21,
+          "false_positives": 20,
+          "false_negatives": 22,
+          "true_positives": 96,
+          "precision": 0.8275862068965517,
+          "recall": 0.8135593220338984,
+          "specificity": 0.5121951219512195,
+          "f1": 0.8205128205128205,
+          "f2": 0.8163265306122449,
+          "accuracy": 0.7358490566037735,
+          "roc_auc": 0.7312939231087225,
+          "average_precision": 0.8773767235244841,
+          "confusion_matrix": [
+            [
+              21,
+              20
+            ],
+            [
+              22,
+              96
+            ]
+          ]
+        }
+      }
+    },
+    "Random forest": {
+      "config": {
+        "feature_set": "all_13",
+        "features": [
+          "age",
+          "trestbps",
+          "chol",
+          "thalch",
+          "oldpeak",
+          "sex",
+          "cp",
+          "fbs",
+          "restecg",
+          "exang",
+          "slope",
+          "ca",
+          "thal"
+        ],
+        "missing_strategy": "missing_indicator",
+        "model_params": {
+          "n_estimators": 300,
+          "min_samples_leaf": 5,
+          "max_depth": 6
+        }
+      },
+      "nested_cv": {
+        "f2": {
+          "mean": 0.8547178032071292,
+          "std": 0.023933549336232412
+        },
+        "folds": [
+          {
+            "n": 245,
+            "positive_cases": 136,
+            "true_negatives": 79,
+            "false_positives": 30,
+            "false_negatives": 22,
+            "true_positives": 114,
+            "precision": 0.7916666666666666,
+            "recall": 0.8382352941176471,
+            "specificity": 0.7247706422018348,
+            "f1": 0.8142857142857143,
+            "f2": 0.8284883720930233,
+            "accuracy": 0.7877551020408163,
+            "roc_auc": 0.8720992984349702,
+            "average_precision": 0.8849425384281705,
+            "confusion_matrix": [
+              [
+                79,
+                30
+              ],
+              [
+                22,
+                114
+              ]
+            ]
+          },
+          {
+            "n": 245,
+            "positive_cases": 135,
+            "true_negatives": 87,
+            "false_positives": 23,
+            "false_negatives": 18,
+            "true_positives": 117,
+            "precision": 0.8357142857142857,
+            "recall": 0.8666666666666667,
+            "specificity": 0.7909090909090909,
+            "f1": 0.850909090909091,
+            "f2": 0.8602941176470589,
+            "accuracy": 0.8326530612244898,
+            "roc_auc": 0.903030303030303,
+            "average_precision": 0.9033293069370265,
+            "confusion_matrix": [
+              [
+                87,
+                23
+              ],
+              [
+                18,
+                117
+              ]
+            ]
+          },
+          {
+            "n": 244,
+            "positive_cases": 135,
+            "true_negatives": 93,
+            "false_positives": 16,
+            "false_negatives": 17,
+            "true_positives": 118,
+            "precision": 0.8805970149253731,
+            "recall": 0.8740740740740741,
+            "specificity": 0.8532110091743119,
+            "f1": 0.8773234200743495,
+            "f2": 0.8753709198813057,
+            "accuracy": 0.8647540983606558,
+            "roc_auc": 0.9240910635406049,
+            "average_precision": 0.9426576658562498,
+            "confusion_matrix": [
+              [
+                93,
+                16
+              ],
+              [
+                17,
+                118
+              ]
+            ]
+          }
+        ]
+      },
+      "cross_validation": {
+        "f2": {
+          "mean": 0.8547178032071292,
+          "std": 0.023933549336232412
+        }
+      },
+      "final_search_cv_f2": {
+        "mean": 0.8476339087910312,
+        "std": 0.040189406362903926
+      },
+      "holdout": {
+        "n": 184,
+        "positive_cases": 102,
+        "true_negatives": 64,
+        "false_positives": 18,
+        "false_negatives": 10,
+        "true_positives": 92,
+        "precision": 0.8363636363636363,
+        "recall": 0.9019607843137255,
+        "specificity": 0.7804878048780488,
+        "f1": 0.8679245283018868,
+        "f2": 0.888030888030888,
+        "accuracy": 0.8478260869565217,
+        "roc_auc": 0.8849832615973218,
+        "average_precision": 0.8705650181894526,
+        "confusion_matrix": [
+          [
+            64,
+            18
+          ],
+          [
+            10,
+            92
+          ]
+        ]
+      },
+      "holdout_by_site": {
+        "Cleveland": {
+          "n": 61,
+          "positive_cases": 28,
+          "true_negatives": 29,
+          "false_positives": 4,
+          "false_negatives": 2,
+          "true_positives": 26,
+          "precision": 0.8666666666666667,
+          "recall": 0.9285714285714286,
+          "specificity": 0.8787878787878788,
+          "f1": 0.896551724137931,
+          "f2": 0.9154929577464789,
+          "accuracy": 0.9016393442622951,
+          "roc_auc": 0.9556277056277056,
+          "average_precision": 0.9469646990430515,
+          "confusion_matrix": [
+            [
+              29,
+              4
+            ],
+            [
+              2,
+              26
+            ]
+          ]
+        },
+        "Hungary": {
+          "n": 58,
+          "positive_cases": 21,
+          "true_negatives": 32,
+          "false_positives": 5,
+          "false_negatives": 5,
+          "true_positives": 16,
+          "precision": 0.7619047619047619,
+          "recall": 0.7619047619047619,
+          "specificity": 0.8648648648648649,
+          "f1": 0.7619047619047619,
+          "f2": 0.7619047619047619,
+          "accuracy": 0.8275862068965517,
+          "roc_auc": 0.8532818532818532,
+          "average_precision": 0.7403289837877101,
+          "confusion_matrix": [
+            [
+              32,
+              5
+            ],
+            [
+              5,
+              16
+            ]
+          ]
+        },
+        "Switzerland": {
+          "n": 25,
+          "positive_cases": 23,
+          "true_negatives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "true_positives": 22,
+          "precision": 0.9565217391304348,
+          "recall": 0.9565217391304348,
+          "specificity": 0.5,
+          "f1": 0.9565217391304348,
+          "f2": 0.9565217391304348,
+          "accuracy": 0.92,
+          "roc_auc": 0.8260869565217391,
+          "average_precision": 0.9837070005023442,
+          "confusion_matrix": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              22
+            ]
+          ]
+        },
+        "VA Long Beach": {
+          "n": 40,
+          "positive_cases": 30,
+          "true_negatives": 2,
+          "false_positives": 8,
+          "false_negatives": 2,
+          "true_positives": 28,
+          "precision": 0.7777777777777778,
+          "recall": 0.9333333333333333,
+          "specificity": 0.2,
+          "f1": 0.8484848484848485,
+          "f2": 0.8974358974358975,
+          "accuracy": 0.75,
+          "roc_auc": 0.6966666666666667,
+          "average_precision": 0.8350625104638745,
+          "confusion_matrix": [
+            [
+              2,
+              8
+            ],
+            [
+              2,
+              28
+            ]
+          ]
+        }
+      },
+      "unseen_site_validation": {
+        "Cleveland": {
+          "n": 243,
+          "positive_cases": 111,
+          "true_negatives": 79,
+          "false_positives": 53,
+          "false_negatives": 11,
+          "true_positives": 100,
+          "precision": 0.6535947712418301,
+          "recall": 0.9009009009009009,
+          "specificity": 0.5984848484848485,
+          "f1": 0.7575757575757576,
+          "f2": 0.8375209380234506,
+          "accuracy": 0.7366255144032922,
+          "roc_auc": 0.8614523614523614,
+          "average_precision": 0.8389799166313884,
+          "confusion_matrix": [
+            [
+              79,
+              53
+            ],
+            [
+              11,
+              100
+            ]
+          ]
+        },
+        "Hungary": {
+          "n": 234,
+          "positive_cases": 85,
+          "true_negatives": 96,
+          "false_positives": 53,
+          "false_negatives": 5,
+          "true_positives": 80,
+          "precision": 0.6015037593984962,
+          "recall": 0.9411764705882353,
+          "specificity": 0.6442953020134228,
+          "f1": 0.7339449541284404,
+          "f2": 0.8456659619450317,
+          "accuracy": 0.7521367521367521,
+          "roc_auc": 0.9110935649427557,
+          "average_precision": 0.8765684754041392,
+          "confusion_matrix": [
+            [
+              96,
+              53
+            ],
+            [
+              5,
+              80
+            ]
+          ]
+        },
+        "Switzerland": {
+          "n": 98,
+          "positive_cases": 92,
+          "true_negatives": 4,
+          "false_positives": 2,
+          "false_negatives": 21,
+          "true_positives": 71,
+          "precision": 0.9726027397260274,
+          "recall": 0.7717391304347826,
+          "specificity": 0.6666666666666666,
+          "f1": 0.8606060606060606,
+          "f2": 0.8049886621315193,
+          "accuracy": 0.7653061224489796,
+          "roc_auc": 0.7626811594202898,
+          "average_precision": 0.9740112549366686,
+          "confusion_matrix": [
+            [
+              4,
+              2
+            ],
+            [
+              21,
+              71
+            ]
+          ]
+        },
+        "VA Long Beach": {
+          "n": 159,
+          "positive_cases": 118,
+          "true_negatives": 24,
+          "false_positives": 17,
+          "false_negatives": 21,
+          "true_positives": 97,
+          "precision": 0.8508771929824561,
+          "recall": 0.8220338983050848,
+          "specificity": 0.5853658536585366,
+          "f1": 0.8362068965517241,
+          "f2": 0.8276450511945392,
+          "accuracy": 0.7610062893081762,
+          "roc_auc": 0.7538238941711451,
+          "average_precision": 0.8913224970264055,
+          "confusion_matrix": [
+            [
+              24,
+              17
+            ],
+            [
+              21,
+              97
+            ]
+          ]
+        }
+      }
+    },
+    "XGBoost": {
+      "config": {
+        "feature_set": "all_13",
+        "features": [
+          "age",
+          "trestbps",
+          "chol",
+          "thalch",
+          "oldpeak",
+          "sex",
+          "cp",
+          "fbs",
+          "restecg",
+          "exang",
+          "slope",
+          "ca",
+          "thal"
+        ],
+        "missing_strategy": "missing_indicator",
+        "model_params": {
+          "n_estimators": 150,
+          "max_depth": 4,
+          "learning_rate": 0.05,
+          "min_child_weight": 2,
+          "reg_lambda": 5
+        }
+      },
+      "nested_cv": {
+        "f2": {
+          "mean": 0.8358582602902361,
+          "std": 0.030842536952161638
+        },
+        "folds": [
+          {
+            "n": 245,
+            "positive_cases": 136,
+            "true_negatives": 81,
+            "false_positives": 28,
+            "false_negatives": 27,
+            "true_positives": 109,
+            "precision": 0.7956204379562044,
+            "recall": 0.8014705882352942,
+            "specificity": 0.7431192660550459,
+            "f1": 0.7985347985347986,
+            "f2": 0.8002936857562408,
+            "accuracy": 0.7755102040816326,
+            "roc_auc": 0.8582029141932003,
+            "average_precision": 0.8730984504160866,
+            "confusion_matrix": [
+              [
+                81,
+                28
+              ],
+              [
+                27,
+                109
+              ]
+            ]
+          },
+          {
+            "n": 245,
+            "positive_cases": 135,
+            "true_negatives": 83,
+            "false_positives": 27,
+            "false_negatives": 18,
+            "true_positives": 117,
+            "precision": 0.8125,
+            "recall": 0.8666666666666667,
+            "specificity": 0.7545454545454545,
+            "f1": 0.8387096774193549,
+            "f2": 0.8552631578947368,
+            "accuracy": 0.8163265306122449,
+            "roc_auc": 0.8874074074074074,
+            "average_precision": 0.8969504353773019,
+            "confusion_matrix": [
+              [
+                83,
+                27
+              ],
+              [
+                18,
+                117
+              ]
+            ]
+          },
+          {
+            "n": 244,
+            "positive_cases": 135,
+            "true_negatives": 94,
+            "false_positives": 15,
+            "false_negatives": 21,
+            "true_positives": 114,
+            "precision": 0.8837209302325582,
+            "recall": 0.8444444444444444,
+            "specificity": 0.8623853211009175,
+            "f1": 0.8636363636363636,
+            "f2": 0.852017937219731,
+            "accuracy": 0.8524590163934426,
+            "roc_auc": 0.9244988107373429,
+            "average_precision": 0.9435722060537228,
+            "confusion_matrix": [
+              [
+                94,
+                15
+              ],
+              [
+                21,
+                114
+              ]
+            ]
+          }
+        ]
+      },
+      "cross_validation": {
+        "f2": {
+          "mean": 0.8358582602902361,
+          "std": 0.030842536952161638
+        }
+      },
+      "final_search_cv_f2": {
+        "mean": 0.8501625831350832,
+        "std": 0.04696573873163801
+      },
+      "holdout": {
+        "n": 184,
+        "positive_cases": 102,
+        "true_negatives": 64,
+        "false_positives": 18,
+        "false_negatives": 11,
+        "true_positives": 91,
+        "precision": 0.8348623853211009,
+        "recall": 0.8921568627450981,
+        "specificity": 0.7804878048780488,
+        "f1": 0.8625592417061612,
+        "f2": 0.8800773694390716,
+        "accuracy": 0.842391304347826,
+        "roc_auc": 0.8888091822094693,
+        "average_precision": 0.8761770328623986,
+        "confusion_matrix": [
+          [
+            64,
+            18
+          ],
+          [
+            11,
+            91
+          ]
+        ]
+      },
+      "holdout_by_site": {
+        "Cleveland": {
+          "n": 61,
+          "positive_cases": 28,
+          "true_negatives": 29,
+          "false_positives": 4,
+          "false_negatives": 1,
+          "true_positives": 27,
+          "precision": 0.8709677419354839,
+          "recall": 0.9642857142857143,
+          "specificity": 0.8787878787878788,
+          "f1": 0.9152542372881356,
+          "f2": 0.9440559440559441,
+          "accuracy": 0.9180327868852459,
+          "roc_auc": 0.9675324675324675,
+          "average_precision": 0.9604203788001433,
+          "confusion_matrix": [
+            [
+              29,
+              4
+            ],
+            [
+              1,
+              27
+            ]
+          ]
+        },
+        "Hungary": {
+          "n": 58,
+          "positive_cases": 21,
+          "true_negatives": 31,
+          "false_positives": 6,
+          "false_negatives": 5,
+          "true_positives": 16,
+          "precision": 0.7272727272727273,
+          "recall": 0.7619047619047619,
+          "specificity": 0.8378378378378378,
+          "f1": 0.7441860465116279,
+          "f2": 0.7547169811320755,
+          "accuracy": 0.8103448275862069,
+          "roc_auc": 0.8455598455598455,
+          "average_precision": 0.726255691372591,
+          "confusion_matrix": [
+            [
+              31,
+              6
+            ],
+            [
+              5,
+              16
+            ]
+          ]
+        },
+        "Switzerland": {
+          "n": 25,
+          "positive_cases": 23,
+          "true_negatives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "true_positives": 22,
+          "precision": 0.9565217391304348,
+          "recall": 0.9565217391304348,
+          "specificity": 0.5,
+          "f1": 0.9565217391304348,
+          "f2": 0.9565217391304348,
+          "accuracy": 0.92,
+          "roc_auc": 0.7608695652173914,
+          "average_precision": 0.9740945903208804,
+          "confusion_matrix": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              22
+            ]
+          ]
+        },
+        "VA Long Beach": {
+          "n": 40,
+          "positive_cases": 30,
+          "true_negatives": 3,
+          "false_positives": 7,
+          "false_negatives": 4,
+          "true_positives": 26,
+          "precision": 0.7878787878787878,
+          "recall": 0.8666666666666667,
+          "specificity": 0.3,
+          "f1": 0.8253968253968254,
+          "f2": 0.8496732026143791,
+          "accuracy": 0.725,
+          "roc_auc": 0.7166666666666667,
+          "average_precision": 0.8671670651893616,
+          "confusion_matrix": [
+            [
+              3,
+              7
+            ],
+            [
+              4,
+              26
+            ]
+          ]
+        }
+      },
+      "unseen_site_validation": {
+        "Cleveland": {
+          "n": 243,
+          "positive_cases": 111,
+          "true_negatives": 82,
+          "false_positives": 50,
+          "false_negatives": 14,
+          "true_positives": 97,
+          "precision": 0.6598639455782312,
+          "recall": 0.8738738738738738,
+          "specificity": 0.6212121212121212,
+          "f1": 0.751937984496124,
+          "f2": 0.8206429780033841,
+          "accuracy": 0.7366255144032922,
+          "roc_auc": 0.8586541086541086,
+          "average_precision": 0.8468386349133197,
+          "confusion_matrix": [
+            [
+              82,
+              50
+            ],
+            [
+              14,
+              97
+            ]
+          ]
+        },
+        "Hungary": {
+          "n": 234,
+          "positive_cases": 85,
+          "true_negatives": 113,
+          "false_positives": 36,
+          "false_negatives": 13,
+          "true_positives": 72,
+          "precision": 0.6666666666666666,
+          "recall": 0.8470588235294118,
+          "specificity": 0.7583892617449665,
+          "f1": 0.7461139896373057,
+          "f2": 0.8035714285714286,
+          "accuracy": 0.7905982905982906,
+          "roc_auc": 0.888511646269246,
+          "average_precision": 0.8310554933699889,
+          "confusion_matrix": [
+            [
+              113,
+              36
+            ],
+            [
+              13,
+              72
+            ]
+          ]
+        },
+        "Switzerland": {
+          "n": 98,
+          "positive_cases": 92,
+          "true_negatives": 4,
+          "false_positives": 2,
+          "false_negatives": 18,
+          "true_positives": 74,
+          "precision": 0.9736842105263158,
+          "recall": 0.8043478260869565,
+          "specificity": 0.6666666666666666,
+          "f1": 0.8809523809523809,
+          "f2": 0.8333333333333334,
+          "accuracy": 0.7959183673469388,
+          "roc_auc": 0.7753623188405797,
+          "average_precision": 0.9774089180074188,
+          "confusion_matrix": [
+            [
+              4,
+              2
+            ],
+            [
+              18,
+              74
+            ]
+          ]
+        },
+        "VA Long Beach": {
+          "n": 159,
+          "positive_cases": 118,
+          "true_negatives": 24,
+          "false_positives": 17,
+          "false_negatives": 32,
+          "true_positives": 86,
+          "precision": 0.8349514563106796,
+          "recall": 0.7288135593220338,
+          "specificity": 0.5853658536585366,
+          "f1": 0.7782805429864253,
+          "f2": 0.7478260869565218,
+          "accuracy": 0.6918238993710691,
+          "roc_auc": 0.704630012401819,
+          "average_precision": 0.8654604880123773,
+          "confusion_matrix": [
+            [
+              24,
+              17
+            ],
+            [
+              32,
+              86
+            ]
+          ]
+        }
+      }
+    }
+  }
+}
